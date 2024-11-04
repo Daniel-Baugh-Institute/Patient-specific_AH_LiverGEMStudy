@@ -12,4 +12,8 @@ This repository contains 10 files.
 - **RstudioInformation.txt**: TXT file with information on the RStudio working environment used for analysis and figure replication in the manuscript
 - **PythonInformation.txt**: TXT file with information on the Python working environment used for running the Pheflux algorithm
 
+- # Dependencies
+- [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0)
+- [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0)
+
 **ref:** Manchel et al. Genome-scale patient-specific modeling identifies combinatorial intervention via *Hkdc1* and *Pkm* to reverse glucose use metabolic reprogramming in alcohol-associated hepatitis. In Preparation.
