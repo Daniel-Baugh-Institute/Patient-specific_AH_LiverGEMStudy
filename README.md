@@ -1,6 +1,6 @@
 # Patient-specific alcohol-associated hepatitis liver genome-scale metabolic modeling study
 
-This repository contains 11 files.
+This repository contains 12 files.
 - **CalculateNetEnzymaticLevel.R**: R script for calculating the Net Enzymatic Level (NEL) for each reaction in the Human1 generic GEM
 - **Hsapiens_cellMedium.csv**: CSV file containing the Homo Sapien cell medium information necessary for running the Pheflux algorithm
 - **Human-GEM.zip**: Zipped XML file of the Human1 generic metabolic network
@@ -12,6 +12,7 @@ This repository contains 11 files.
 - **SaveGeneExpFiles_forPheflux.R**: R script for saving the gene expression files necessary for running the Pheflux algorithm
 - **RstudioInformation.txt**: TXT file with information on the RStudio working environment used for analysis and figure replication in the manuscript
 - **PythonInformation.txt**: TXT file with information on the Python working environment used for running the Pheflux algorithm
+- **FilesforFigureReplication.zip**: Zipped file containing all necessary files for analysis and figure replication in the manuscript
 
 # Dependencies
 - [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0)
