@@ -1,6 +1,6 @@
 # Patient-specific alcohol-associated hepatitis liver genome-scale metabolic modeling study
 
-This repository contains 9 files.
+This repository contains 10 files.
 - **CalculateNetEnzymaticLevel.R**: R script for calculating the Net Enzymatic Level (NEL) for each reaction in the Human1 generic GEM
 - **Hsapiens_cellMedium.csv**: CSV file containing the Homo Sapien cell medium information necessary for running the Pheflux algorithm
 - **LiverMetabolomics.SevereAH.vs.HealthyControls.xlsx**: Excel file containing the metabolites that are significantly different between Severe AH and Healthy individuals
