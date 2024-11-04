@@ -17,4 +17,4 @@ This repository contains 11 files.
 - [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0)
 - [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0)
 
-**ref:** Manchel et al. Genome-scale patient-specific modeling identifies combinatorial intervention via *Hkdc1* and *Pkm* to reverse glucose use metabolic reprogramming in alcohol-associated hepatitis. In Preparation.
+**ref:** Manchel et al., Genome-scale patient-specific modeling identifies combinatorial intervention via *Hkdc1* and *Pkm* to reverse glucose use metabolic reprogramming in alcohol-associated hepatitis. In Preparation.
