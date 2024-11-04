@@ -13,7 +13,7 @@ This repository contains 11 files.
 - **RstudioInformation.txt**: TXT file with information on the RStudio working environment used for analysis and figure replication in the manuscript
 - **PythonInformation.txt**: TXT file with information on the Python working environment used for running the Pheflux algorithm
 
-- # Dependencies
+# Dependencies
 - [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0)
 - [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0)
 
