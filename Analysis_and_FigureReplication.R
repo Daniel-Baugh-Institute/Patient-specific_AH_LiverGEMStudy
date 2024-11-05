@@ -682,24 +682,6 @@ ggplot(df, aes(x = x, y = y, fill = color)) +
 
 
 
-# ## corelation analysis between calculated pseudotime and gene expression
-# all.metgene.pseudo.corrs <- c()
-# pseudo <- as.numeric(pseudotime[,1])
-# for (j in rownames(metgenes_patient_geneNames)){
-#   findgene <- as.numeric(metgenes_patient_geneNames[match(j,rownames(metgenes_patient_geneNames)),c(1:51,80:89)])
-#   get.cor <- cor.test(pseudo,findgene, method = 'spearman')
-#   if (!(is.na(get.cor$estimate[['rho']]))){
-#     all.metgene.pseudo.corrs <- rbind(all.metgene.pseudo.corrs,c(j,get.cor$estimate[['rho']]))
-#   }
-# }
-# all.metgene.pseudo.corrs <- as.data.frame(all.metgene.pseudo.corrs)
-# all.metgene.pseudo.corrs$V2 <- as.numeric(all.metgene.pseudo.corrs$V2)
-# all.metgene.pseudo.poscor <- all.metgene.pseudo.corrs$V1[which(all.metgene.pseudo.corrs$V2>0.5)]
-# all.metgene.pseudo.negcor <- all.metgene.pseudo.corrs$V1[which(all.metgene.pseudo.corrs$V2< -0.5)]
-# all.metgene.pseudo.corrs.sigcor <- all.metgene.pseudo.corrs[which(all.metgene.pseudo.corrs$V2< -0.5 | all.metgene.pseudo.corrs$V2>0.5),]
-# all.metgene.pseudo.corrs.sigcor <- as.data.frame(all.metgene.pseudo.corrs.sigcor)
-# all.metgene.pseudo.corrs.sigcor <- all.metgene.pseudo.corrs.sigcor[order(all.metgene.pseudo.corrs.sigcor$V2),]
-# 
 
 ## corelation analysis between calculated pseudotime and metabolic fluxes
 all.flux.pseudo.corrs <- c()
@@ -1390,13 +1372,13 @@ HK.KD.annots$severeAH.annotsflux.groups <- NA
 HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(strsplit2(rownames(HKDC1.KD.clusts)[which(HKDC1.KD.clusts$Sample.Groups=="D")],split = "_")[,1],collapse = "|"),
                                              rownames(HK.KD.annots))] <- "Group1"
 HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(strsplit2(rownames(HKDC1.KD.clusts)[which(HKDC1.KD.clusts$Sample.Groups=="C")],split = "_")[,1],collapse = "|"),
-                                             rownames(HK.KD.annots))] <- "Group2"
+                                             rownames(HK.KD.annots))] <- "Group3"
 HK.KD.annots$severeAH.annotsflux.groups[which(HK.KD.annots$disease_state=="nonsevere.AH")] <- "nonsevere.AH"
 HK.KD.annots$severeAH.annotsflux.groups[grep("I",rownames(HK.KD.annots))] <- "Healthy"
-HK.KD.annots$severeAH.annotsflux.groups[which(is.na(HK.KD.annots$severeAH.annotsflux.groups))] <- "No.Group"
-HK.KD.annots$severeAH.annotsflux.groups <- factor(HK.KD.annots$severeAH.annotsflux.groups, levels = c("Healthy","nonsevere.AH","Group1","No.Group","Group2","explant.AH"))
+HK.KD.annots$severeAH.annotsflux.groups[which(is.na(HK.KD.annots$severeAH.annotsflux.groups))] <- "Group2"
+HK.KD.annots$severeAH.annotsflux.groups <- factor(HK.KD.annots$severeAH.annotsflux.groups, levels = c("Healthy","nonsevere.AH","Group1","Group2","Group3","explant.AH"))
 
-ann_colors[["severeAH.annotsflux.groups"]] <- c("Group2"="red","Group1"="blue", "Healthy"='#f280ae',"explant.AH" = "black","nonsevere.AH"="gray","No.Group"="gray")
+ann_colors[["severeAH.annotsflux.groups"]] <- c("Group3"="red","Group1"="blue", "Healthy"='#f280ae',"explant.AH" = "black","nonsevere.AH"="gray","Group2"="gray")
 
 set_annotations(HK.KD.annots)
 set_annot_samps("state")
@@ -1458,7 +1440,7 @@ ggplot(pca.flux.dims$input_data[,1:2], aes(x = PC1, y = PC2)) +
 
 # legend
 plot.new()
-unique_groups <- c("Group1","No.Group","Group2")
+unique_groups <- c("Group1","Group2","Group3")
 legend_colors <- ann_colors$severeAH.annotsflux.groups[match(unique_groups,names(ann_colors$severeAH.annotsflux.groups))]
 legend("center", legend = unique_groups, pt.bg = legend_colors, pch = 21, pt.cex = 4, title = "Severe AH Groups", bty = "n", cex = 1.2,y.intersp = 1.5)
 
@@ -1492,8 +1474,8 @@ ggplot(to.plot, aes(x = pseudo.NoKD, y = pseudo.KD)) +
 # update annotations
 annots$severeAH.annotsflux.groups <- as.character(annots$disease_state)
 annots$severeAH.annotsflux.groups[c(1:18,30:39)] <- as.character(HK.KD.annots$severeAH.annotsflux.groups[match(rownames(annots)[c(1:18,30:39)],rownames(HK.KD.annots))])
-annots$severeAH.annotsflux.groups[which(is.na(annots$severeAH.annotsflux.groups))] <- "No.Group"
-annots$severeAH.annotsflux.groups <- factor(annots$severeAH.annotsflux.groups,levels=c("Group1","No.Group","Group2"))
+annots$severeAH.annotsflux.groups[which(is.na(annots$severeAH.annotsflux.groups))] <- "Group2"
+annots$severeAH.annotsflux.groups <- factor(annots$severeAH.annotsflux.groups,levels=c("Group1","Group2","Group3"))
 
 # DESeqs between patient groups following Hkdc1 KD
 dds <- DESeqDataSetFromMatrix(countData = rawct[,c(1:18,30:39)],
@@ -1504,7 +1486,7 @@ dds <- dds[keep,]
 dds <- DESeq(dds)
 
 
-severeAH.groups <- as.data.frame(results(dds, contrast=c("severeAH.annotsflux.groups","Group2","Group1")))
+severeAH.groups <- as.data.frame(results(dds, contrast=c("severeAH.annotsflux.groups","Group3","Group1")))
 
 severeAH.groups <- severeAH.groups[which(severeAH.groups$padj<0.05 & severeAH.groups$log2FoldChange>0),]
 
@@ -1513,7 +1495,7 @@ glycolysis.genes <- unique(as.vector(strsplit2(ihuman.geneName$GeneAssociationNa
                                                split="\\(|\\)| or | and ")))
 glycolysis.genes[which(glycolysis.genes%in%severeAH.groups$GeneName)]
 
-# Group1 vs. Group2 signif genes
+# Group1 vs. Group3 signif genes
 #"PKM" "HK1" "HK2"
 
 ## Figure 8A
@@ -1534,7 +1516,7 @@ beeswarmGenes(metgenes_patient_geneNames[match(c("HK1","HK2","PKM"),rownames(met
         axis.line = element_line(color = "black", size = 1),  # Axis lines
         axis.text = element_text(color = "black", size = 16),
         axis.title = element_text(size = 18)) +
-  geom_signif(comparisons = list(c("Group1","Group2")),
+  geom_signif(comparisons = list(c("Group1","Group3")),
               map_signif_level=T, textsize = 8, step_increase=0.1,vjust=0.5,margin_top = 0.08)
 
 
@@ -1898,15 +1880,15 @@ HK.KD.annots[,1] <- strsplit2(HK.KD.annots[,1],split="_")[,1]
 HK.KD.annots$severeAH.annotsflux.groups <- NA
 HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group1")],collapse = "|"),
                                              rownames(HK.KD.annots))] <- "Group1"
+HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group3")],collapse = "|"),
+                                             rownames(HK.KD.annots))] <- "Group3"
 HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group2")],collapse = "|"),
                                              rownames(HK.KD.annots))] <- "Group2"
-HK.KD.annots$severeAH.annotsflux.groups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="No.Group")],collapse = "|"),
-                                             rownames(HK.KD.annots))] <- "No.Group"
 HK.KD.annots$severeAH.annotsflux.groups[grep("I",rownames(HK.KD.annots))] <- "Healthy"
 
-HK.KD.annots$severeAH.annotsflux.groups <- factor(HK.KD.annots$severeAH.annotsflux.groups, levels = c("Healthy","Group1","No.Group","Group2"))
+HK.KD.annots$severeAH.annotsflux.groups <- factor(HK.KD.annots$severeAH.annotsflux.groups, levels = c("Healthy","Group1","Group2","Group3"))
 
-ann_colors[["severeAH.annotsflux.groups"]] <- c("Healthy"='#f280ae',"Group1"="blue","No.Group"="gray", "Group2"="red")
+ann_colors[["severeAH.annotsflux.groups"]] <- c("Healthy"='#f280ae',"Group1"="blue","Group2"="gray", "Group3"="red")
 
 ann_colors[["state"]] <- c("Healthy"="#f280ae","No.KD"="gray","HK2.HKDC1.PKM.KD"="black","HKDC1.PKM.KD"="red")
 
@@ -2038,7 +2020,7 @@ rfe_test_performance <- function(trainData, testData,testData2, target_variable)
     
     # Evaluate on test set
     test_pred <- predict(final_model, testData[, selected_features])
-    test_performance <- wilcox.test(test_pred[which(testData$groups=="Group1")],test_pred[which(testData$groups=="Group2")],alternative = "less")$p.value
+    test_performance <- wilcox.test(test_pred[which(testData$groups=="Group1")],test_pred[which(testData$groups=="Group3")],alternative = "less")$p.value
     
     
     test_pred2 <- predict(final_model, testData2[, selected_features])
@@ -2101,25 +2083,25 @@ colnames(plot.score) <- rownames(annots)[c(1:51,80:89)]
 annots$disease_state.group <- annots$disease_state
 annots$disease_state.group[which(annots$disease_state.group=="explant.AH")]="severe.AH"
 
-annots$severeAH.annotsflux.groups <-"No.Group"
+annots$severeAH.annotsflux.groups <-"Group2"
 annots$severeAH.annotsflux.groups[which(rownames(annots)%in%rownames(HK.KD.annots))] <- as.character(HK.KD.annots$severeAH.annotsflux.groups[na.omit(match(rownames(annots),rownames(HK.KD.annots)))])
-annots$severeAH.annotsflux.groups[-which(annots$severeAH.annotsflux.groups%in%c("Group1","Group2"))] <- "No.Group"
-annots$severeAH.annotsflux.groups <- factor(annots$severeAH.annotsflux.groups,levels = c("Group1","No.Group","Group2"))
+annots$severeAH.annotsflux.groups[-which(annots$severeAH.annotsflux.groups%in%c("Group1","Group3"))] <- "Group2"
+annots$severeAH.annotsflux.groups <- factor(annots$severeAH.annotsflux.groups,levels = c("Group1","Group2","Group3"))
 
 annots$severeAH.annotsflux.groups_disease <- as.character(annots$severeAH.annotsflux.groups)
 annots$severeAH.annotsflux.groups_disease[-grep("A|B|D",rownames(annots))] <- as.character(annots$disease_state[-grep("A|B|D",rownames(annots))])
 annots$severeAH.annotsflux.groups_disease <- factor(annots$severeAH.annotsflux.groups_disease,levels = c("NASH","comp.cirrhosis","HCV","healthy.control","early.ASH","nonsevere.AH",
-                                                                                                         "Group1","No.Group","Group2"))
+                                                                                                         "Group1","Group2","Group3"))
 ## Figure 9A
 set_annotations(annots)
 beeswarmGenes(plot.score,c("score"),groupby.x = "severeAH.annotsflux.groups_disease",
               color.by = "disease_state",facet.wrap = T,axis.text.x.size = 12,point.size = 6) +
-  geom_signif(comparisons = list(c("Group1", "Group2")),
+  geom_signif(comparisons = list(c("Group1", "Group3")),
               map_signif_level = T,
               textsize = 8, step_increase=0.1,vjust=0.5,margin_top = 0.09, test="t.test") + 
   geom_hline(yintercept = 
                mean(c(max(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group1")]),
-                      min(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group2")]))), 
+                      min(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group3")]))), 
              linetype = "dashed", size = 1) +
   theme(plot.title = element_text(hjust = 0.5),
         panel.background = element_rect(fill = "white", color = NA),  # White background
@@ -2132,7 +2114,7 @@ beeswarmGenes(plot.score,c("score"),groupby.x = "severeAH.annotsflux.groups_dise
         axis.text.x = element_text(size = 16, angle = 45, hjust = 1))
 
 mean(c(max(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group1")]),
-       min(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group2")])))
+       min(plot.score[1,which(annots$severeAH.annotsflux.groups=="Group3")])))
 # [1] 3.962765
 
 plot.score.t <- as.data.frame(t(plot.score))
@@ -2322,13 +2304,13 @@ ML.annots$subgroups <- as.character(ML.annots$disease_state)
 ML.annots$subgroups[grep(paste0(strsplit2(rownames(HKDC1.KD.clusts)[which(HKDC1.KD.clusts$Sample.Groups=="D")],split = "_")[,1],collapse = "|"),
                          rownames(ML.annots))] <- "Group1"
 ML.annots$subgroups[grep(paste0(strsplit2(rownames(HKDC1.KD.clusts)[which(HKDC1.KD.clusts$Sample.Groups=="C")],split = "_")[,1],collapse = "|"),
-                         rownames(ML.annots))] <- "Group2"
+                         rownames(ML.annots))] <- "Group3"
 # ML.annots$subgroups[which(!is.na(HK.KD.annots$severeAH.annotsflux.groups[c(1:18,30:39)]))] <- na.omit(as.character(HK.KD.annots$severeAH.annotsflux.groups[c(1:18,30:39)]))
-ML.annots$subgroups[which(ML.annots$subgroups%in%c("KD","severe.AH"))] <- "No.Group"
+ML.annots$subgroups[which(ML.annots$subgroups%in%c("KD","severe.AH"))] <- "Group2"
 ML.annots$subgroups[which(ML.annots$disease_state=="KD")] <- paste0(ML.annots$subgroups[which(ML.annots$disease_state=="KD")],"_","KD")
 ML.annots$subgroups <- factor(ML.annots$subgroups,levels = c("healthy.control","early.ASH","nonsevere.AH",
-                                                             "Group1","Group1_KD","No.Group","No.Group_KD",
-                                                             "Group2","Group2_KD"))
+                                                             "Group1","Group1_KD","Group2","Group2_KD",
+                                                             "Group3","Group3_KD"))
 
 
 ML.colors <- ann_colors
@@ -2336,11 +2318,11 @@ ML.colors[['disease_state']][["severeAH.KD"]] <- "purple"
 ML.colors[['disease_state']][["explantAH.KD"]] <- "lightblue"
 ML.colors[['subgroups']] <- ML.colors[["disease_state"]]
 ML.colors[['subgroups']][["Group1"]] <- "blue"
-ML.colors[['subgroups']][["Group2"]] <- "red"
-ML.colors[['subgroups']][["No.Group"]] <- "gray"
+ML.colors[['subgroups']][["Group3"]] <- "red"
+ML.colors[['subgroups']][["Group2"]] <- "gray"
 ML.colors[['subgroups']][["Group1_KD"]] <- "blue"
-ML.colors[['subgroups']][["Group2_KD"]] <- "red"
-ML.colors[['subgroups']][["No.Group_KD"]] <- "gray"
+ML.colors[['subgroups']][["Group3_KD"]] <- "red"
+ML.colors[['subgroups']][["Group2_KD"]] <- "gray"
 ML.colors[['subgroups']][["explant.AH"]] <- ann_colors$disease_state[['explant.AH']]
 
 set_annotations(ML.annots)
@@ -2360,10 +2342,10 @@ ggplot(to.plot[grep("HKDC1.KD|PKM.KD|HKDC1.50pct.KD",to.plot$Var2),], aes(x=subg
   scale_fill_manual(values = as.character(ML.colors[['subgroups']][match(levels(to.plot$subgroup),names(ML.colors[['subgroups']]))])) +
   facet_wrap(~Var2, scales="free",ncol=4)+
   geom_signif(comparisons = list(c("Group1", "Group1_KD"),
-                                 c("No.Group", "No.Group_KD"),
                                  c("Group2", "Group2_KD"),
+                                 c("Group3", "Group3_KD"),
                                  c("early.ASH", "Group1_KD"),
-                                 c("nonsevere.AH", "Group2_KD")),
+                                 c("nonsevere.AH", "Group3_KD")),
               map_signif_level = function(p) {
                 if(p>0.05) return("")
                 if(p<0.05 & p>0.01)return("*")
@@ -2390,17 +2372,17 @@ for (i in unique(to.plot$Var2)){
   test1 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1")]),
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                   alternative = "greater",paired=T)
-  test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+  test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                   alternative = "greater",paired=T)
-  test3 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group_KD")]),
+  test3 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
                   alternative = "greater",paired=T)
   
   paired.testing <- rbind(paired.testing,c(test1[['p.value']],test2[['p.value']],test3[['p.value']]))
 }
 rownames(paired.testing) <- rownames(score.KD)
-colnames(paired.testing) <- c("Group1","Group2","No.Group")
+colnames(paired.testing) <- c("Group1","Group3","Group2")
 paired.testing
 
 
@@ -2411,7 +2393,7 @@ for (i in unique(to.plot$Var2)){
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                   alternative = "less",paired=F)
   test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="nonsevere.AH")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                   alternative = "less",paired=F)
   other.testing <- rbind(other.testing,c(test1[['p.value']],test2[['p.value']]))
 }
@@ -2433,10 +2415,10 @@ ggplot(to.plot, aes(x=subgroup,y=value,shape=KD,fill=subgroup,group=subgroup))+
   scale_fill_manual(values = as.character(ML.colors[['subgroups']][match(levels(to.plot$subgroup),names(ML.colors[['subgroups']]))])) +
   facet_wrap(~Var2, scales="free")+
   geom_signif(comparisons = list(c("Group1", "Group1_KD"),
-                                 c("No.Group", "No.Group_KD"),
                                  c("Group2", "Group2_KD"),
+                                 c("Group3", "Group3_KD"),
                                  c("early.ASH", "Group1_KD"),
-                                 c("nonsevere.AH", "Group2_KD")),
+                                 c("nonsevere.AH", "Group3_KD")),
               map_signif_level = function(p) {
                 if(p>0.05) return("")
                 if(p<0.05 & p>0.01)return("*")
@@ -2463,17 +2445,17 @@ for (i in unique(to.plot$Var2)){
   test1 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1")]),
                        as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                        alternative = "greater",paired=T)
-  test2 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
-                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+  test2 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3")]),
+                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                        alternative = "greater",paired=T)
-  test3 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group")]),
-                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group_KD")]),
+  test3 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
+                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
                        alternative = "greater",paired=T)
   
   paired.testing <- rbind(paired.testing,c(test1[['p.value']],test2[['p.value']],test3[['p.value']]))
 }
 rownames(paired.testing) <- unique(to.plot$Var2)
-colnames(paired.testing) <- c("Group1","Group2","No.Group")
+colnames(paired.testing) <- c("Group1","Group3","Group2")
 paired.testing
 
 
@@ -2484,7 +2466,7 @@ for (i in unique(to.plot$Var2)){
                        as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                        alternative = "less",paired=F)
   test2 <- wilcox.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="nonsevere.AH")]),
-                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+                       as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                        alternative = "less",paired=F)
   other.testing <- rbind(other.testing,c(test1[['p.value']],test2[['p.value']]))
 }
@@ -2517,10 +2499,10 @@ new.annots$severeAH.annotsflux.groups[-which(new.annots$disease_state%in%c("seve
 
 
 new.annots$severeAH.annotsflux.groups <- factor(new.annots$severeAH.annotsflux.groups, levels = c("healthy.control","early.ASH","nonsevere.AH","Group1",
-                                                                                                  "No.Group","Group2","AH"))
+                                                                                                  "Group2","Group3","AH"))
 
-ann_colors[["severeAH.annotsflux.groups"]] <- c("Group2"="red","Group1"="blue", "healthy.control"='#f280ae',"early.ASH"="#7aaf3e","nonsevere.AH"="#f2e32b",
-                                                "AH" = "black","No.Group"="gray")
+ann_colors[["severeAH.annotsflux.groups"]] <- c("Group3"="red","Group1"="blue", "healthy.control"='#f280ae',"early.ASH"="#7aaf3e","nonsevere.AH"="#f2e32b",
+                                                "AH" = "black","Group2"="gray")
 
 
 # batch correction between original and validation cohorts
@@ -2639,15 +2621,15 @@ rownames(ML.annots) <- colnames(score.KD)
 ML.annots$subgroups <- as.character(ML.annots$disease_state)
 ML.annots$subgroups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group1")],collapse = "|"),
                          rownames(ML.annots))] <- "Group1"
-ML.annots$subgroups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group2")],collapse = "|"),
-                         rownames(ML.annots))] <- "Group2"
-ML.annots$subgroups[which(ML.annots$subgroups%in%c("KD","severe.AH"))] <- "No.Group"
+ML.annots$subgroups[grep(paste0(rownames(annots)[which(annots$severeAH.annotsflux.groups=="Group3")],collapse = "|"),
+                         rownames(ML.annots))] <- "Group3"
+ML.annots$subgroups[which(ML.annots$subgroups%in%c("KD","severe.AH"))] <- "Group2"
 ML.annots$subgroups[which(ML.annots$disease_state=="KD")] <- paste0(ML.annots$subgroups[which(ML.annots$disease_state=="KD")],"_","KD")
 ML.annots$subgroups[intersect(which(ML.annots$disease_state%in%c("KD")),grep("^AH",rownames(ML.annots)))] <- "AH_KD"
 ML.annots$subgroups[intersect(which(ML.annots$disease_state%in%c("AH")),grep("^AH",rownames(ML.annots)))] <- "AH"
 ML.annots$subgroups <- factor(ML.annots$subgroups,levels = c("healthy.control","early.ASH","nonsevere.AH",
-                                                             "Group1","Group1_KD","No.Group","No.Group_KD",
-                                                             "Group2","Group2_KD","AH","AH_KD"))
+                                                             "Group1","Group1_KD","Group2","Group2_KD",
+                                                             "Group3","Group3_KD","AH","AH_KD"))
 
 
 ML.colors <- ann_colors
@@ -2655,11 +2637,11 @@ ML.colors[['disease_state']][["severeAH.KD"]] <- "purple"
 ML.colors[['disease_state']][["explantAH.KD"]] <- "lightblue"
 ML.colors[['subgroups']] <- ML.colors[["disease_state"]]
 ML.colors[['subgroups']][["Group1"]] <- "blue"
-ML.colors[['subgroups']][["Group2"]] <- "red"
-ML.colors[['subgroups']][["No.Group"]] <- "gray"
+ML.colors[['subgroups']][["Group3"]] <- "red"
+ML.colors[['subgroups']][["Group2"]] <- "gray"
 ML.colors[['subgroups']][["Group1_KD"]] <- "blue"
-ML.colors[['subgroups']][["Group2_KD"]] <- "red"
-ML.colors[['subgroups']][["No.Group_KD"]] <- "gray"
+ML.colors[['subgroups']][["Group3_KD"]] <- "red"
+ML.colors[['subgroups']][["Group2_KD"]] <- "gray"
 ML.colors[['subgroups']][["AH"]] <- "black"
 ML.colors[['subgroups']][["AH_KD"]] <- "black"
 ML.colors[['subgroups']][["explant.AH"]] <- ann_colors$disease_state[['explant.AH']]
@@ -2677,7 +2659,7 @@ to.plot$KD <- factor(to.plot$KD,levels = c("No.KD","KD"))
 ## Figure 10C
 ggplot(to.plot, aes(x=subgroup,y=value,shape=KD,fill=subgroup,group=subgroup))+
   geom_hline(yintercept = mean(c(max(to.plot$value[which(to.plot$subgroup=="Group1"&to.plot$Var2=="HKDC1.KD")]),
-                                 min(to.plot$value[which(to.plot$subgroup=="Group2"&to.plot$Var2=="HKDC1.KD")]))),
+                                 min(to.plot$value[which(to.plot$subgroup=="Group3"&to.plot$Var2=="HKDC1.KD")]))),
              linetype="dashed",size=1)+
   ggbeeswarm::geom_quasirandom(size=5,stroke = 0.25)+ scale_shape_manual(values = c(21, 24))+
   scale_fill_manual(values = as.character(ML.colors[['subgroups']][match(levels(to.plot$subgroup),names(ML.colors[['subgroups']]))])) +
@@ -2708,11 +2690,11 @@ for (i in unique(to.plot$Var2)){
   test1 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1")]),
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                   alternative = "greater",paired=T)
-  test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+  test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                   alternative = "greater",paired=T)
-  test3 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="No.Group_KD")]),
+  test3 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
                   alternative = "greater",paired=T)
   test4 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="AH")]),
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="AH_KD")]),
@@ -2721,7 +2703,7 @@ for (i in unique(to.plot$Var2)){
   paired.testing <- rbind(paired.testing,c(test1[['p.value']],test2[['p.value']],test3[['p.value']],test4[['p.value']]))
 }
 rownames(paired.testing) <- unique(to.plot$Var2)
-colnames(paired.testing) <- c("Group1","Group2","No.Group","AH")
+colnames(paired.testing) <- c("Group1","Group3","Group2","AH")
 paired.testing
 
 
@@ -2732,7 +2714,7 @@ for (i in unique(to.plot$Var2)){
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group1_KD")]),
                   alternative = "less",paired=F)
   test2 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="nonsevere.AH")]),
-                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group2_KD")]),
+                  as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="Group3_KD")]),
                   alternative = "less",paired=F)
   test3 <- t.test(as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="nonsevere.AH")]),
                   as.numeric(to.plot$value[which(to.plot$Var2==i & to.plot$subgroup=="AH")]),
