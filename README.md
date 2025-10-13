@@ -27,12 +27,15 @@ This repository contains 11 files and 1 directory. <br /><br />
 1. Install Python (ver. 3.9.7) and all Python dependencies in PythonInformation.txt.
 2. Install RStudio (ver. 4.2.2) and all RStudio dependencies in RstudioInformation.txt.
 
-**Patient-specific metabolic flux analysis:**
+**Patient-specific metabolic flux analysis:** 
+
 1. Run "SaveGeneExpFiles_forPheflux.R" script to write patient-specific gene expression data to csv files for generating patient-specific metabolic fluxes using Pheflux.
 2. Run "Run_PheFlux.ipynb" script to generate patient-specific metabolic fluxes using Pheflux.
 3. Run "SaveFluxFiles_PhefluxOutput.R" to save all patient-specific metabolic fluxes to one large matrix.
 
 **Downstream Analysis and Figure Replication:**
+
 Run "Analysis_and_FigureReplication.R" using files in the "FilesforFigureReplication" directory to replicate downstream analysis results and figures from the manuscript.
 
+#
 **ref:** Manchel et al., Genome-scale patient-specific modeling identifies combinatorial intervention via *Hkdc1* and *Pkm* to reverse glucose use metabolic reprogramming in alcohol-associated hepatitis. In Review. Communications Biology.
