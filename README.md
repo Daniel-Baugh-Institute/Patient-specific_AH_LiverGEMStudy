@@ -24,8 +24,8 @@ This repository contains 11 files and 1 directory. <br /><br />
 - [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0)
 
 # Replication:
-1. Install Python (ver. 3.9.7) and all Python dependencies in PythonInformation.txt.
-2. Install RStudio (ver. 4.2.2) and all RStudio dependencies in RstudioInformation.txt.
+1. Install Python (ver. 3.9.7) and all Python dependencies in "PythonInformation.txt".
+2. Install RStudio (ver. 4.2.2) and all RStudio dependencies in "RstudioInformation.txt".
 
 **Patient-specific metabolic flux analysis:** 
 
@@ -35,7 +35,7 @@ This repository contains 11 files and 1 directory. <br /><br />
 
 **Downstream Analysis and Figure Replication:**
 
-Run "Analysis_and_FigureReplication.R" using files in the "FilesforFigureReplication" directory to replicate downstream analysis results and figures from the manuscript.
+Run "CalculateNetEnzymaticLevel.R" and "Analysis_and_FigureReplication.R" using files in the "FilesforFigureReplication" directory to replicate downstream analysis results and figures from the manuscript.
 
 #
 **ref:** Manchel et al., Genome-scale patient-specific modeling identifies combinatorial intervention via *Hkdc1* and *Pkm* to reverse glucose use metabolic reprogramming in alcohol-associated hepatitis. In Review. Communications Biology.
