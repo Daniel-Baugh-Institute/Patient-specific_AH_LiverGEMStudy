@@ -11,8 +11,8 @@ This repository contains 11 files and 1 directory. <br /><br />
 - **Run_PheFlux.ipynb**: Jupyter notebook file that contains the code for running Pheflux
 - **SaveFluxFiles_PhefluxOutput.R**: R script for saving the Pheflux output files as one large matrix
 - **SaveGeneExpFiles_forPheflux.R**: R script for saving the gene expression files necessary for running the Pheflux algorithm
-- **RstudioInformation.txt**: TXT file with information on the RStudio working environment used for analysis and figure replication in the **Analysis_and_FigureReplication.R** script
-- **PythonInformation.txt**: TXT file with information on the Python working environment used for running the Pheflux algorithm in the **Run_PheFlux.ipynb** script <br />
+- **RstudioInformation.txt**: TXT file with requirements for the RStudio working environment used for analysis and figure replication in the **Analysis_and_FigureReplication.R** script
+- **requirements.txt**: TXT file with requirements for the Python working environment used for running the Pheflux algorithm in the **Run_PheFlux.ipynb** script <br />
 
 **Directory:**
 - **FilesforFigureReplication**: Directory containing all necessary files for analysis and figure replication using the **Analysis_and_FigureReplication.R** script
@@ -24,10 +24,15 @@ This repository contains 11 files and 1 directory. <br /><br />
 - [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0)
 
 # Replication:
-1. Install Python (ver. 3.9.7) and all Python dependencies in "PythonInformation.txt".
-2. Install RStudio (ver. 4.2.2) and all RStudio dependencies in "RstudioInformation.txt".
-3. Install [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0).
-4. Download [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0).
+1. Install Python (ver. 3.9.7) and all Python dependencies in "requirements.txt".
+   - We recommend creating a conda environment with python=3.9.7 and then installing all requirements:
+```
+conda create -n patient-GEM-study python=3.9.7
+pip install -r requirements.txt
+```
+3. Install RStudio (ver. 4.2.2) and all RStudio dependencies in "RstudioInformation.txt".
+4. Install [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0).
+5. Download [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0).
 
 **Patient-specific metabolic flux analysis:** 
 
