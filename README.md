@@ -26,6 +26,8 @@ This repository contains 11 files and 1 directory. <br /><br />
 # Replication:
 1. Install Python (ver. 3.9.7) and all Python dependencies in "PythonInformation.txt".
 2. Install RStudio (ver. 4.2.2) and all RStudio dependencies in "RstudioInformation.txt".
+3. Install [PheFlux](https://github.com/mrivas/pheflux) algorithm (ver. 1.0.0).
+4. Download [Human-GEM](https://github.com/SysBioChalmers/Human-GEM) model (ver. 1.6.0).
 
 **Patient-specific metabolic flux analysis:** 
 
